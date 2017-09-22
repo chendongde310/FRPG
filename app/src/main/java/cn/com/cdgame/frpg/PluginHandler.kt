@@ -38,9 +38,7 @@ class PluginHandler {
     }
 
     companion object {
-        fun get(): PluginHandler {
-            return PluginHandler.declaration.pluginHandler
-        }
+        fun get(): PluginHandler = PluginHandler.declaration.pluginHandler
     }
 
 
