@@ -6,7 +6,7 @@ import com.qihoo360.replugin.RePluginApplication;
 import com.qihoo360.replugin.RePluginConfig;
 
 /**
- * Author：陈东
+ * @Author：陈东
  * Time：2017/9/15 - 下午3:03
  * Notes:
  */

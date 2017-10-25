@@ -19,6 +19,7 @@ class PluginUtils private constructor() {
                 info.packageName + "." + classname))
     }
 
+
     fun StartActivity(context: Context, name: String, classname: String) {
         StartActivity(context, RePlugin.getPluginInfo(name), classname)
     }

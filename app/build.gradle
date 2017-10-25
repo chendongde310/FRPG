@@ -3,12 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'replugin-host-gradle'
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "cn.com.cdgame.frpg"
         minSdkVersion 21
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
     }
@@ -29,16 +29,20 @@ repluginHostConfig {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:appcompat-v7:26.1.0'
     //---------------------------------------------
-    compile 'org.projectlombok:lombok:1.16.18'
-    compile 'com.orhanobut:logger:1.5'
+    compile 'com.orhanobut:logger:2.1.1'
     compile 'com.qihoo360.replugin:replugin-host-lib:2.2.0'
     //---------------------------------------------
     compile 'com.lzy.net:okgo:3.0.4'
-    compile 'org.jetbrains.kotlin:kotlin-stdlib-jre7:1.1.4-3'
+    compile 'org.jetbrains.kotlin:kotlin-stdlib-jre7:1.1.4'
     compile 'com.alibaba:fastjson:1.2.38'
     compile 'com.orhanobut:hawk:2.0.1'
+
+    //---------------------UI------------------------
+    compile "com.hanks:htextview-base:0.1.1"    // base library
+    compile "com.hanks:htextview-typer:0.1.1"
+    compile "com.hanks:htextview-scale:0.1.1"
 }
 repositories {
     mavenCentral()
