@@ -1,6 +1,8 @@
 package cn.com.cdgame.frpg;
 
 import com.lzy.okgo.OkGo;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 import com.qihoo360.replugin.RePlugin;
 import com.qihoo360.replugin.RePluginApplication;
 import com.qihoo360.replugin.RePluginConfig;
@@ -20,6 +22,7 @@ public class APP extends RePluginApplication {
     public void onCreate() {
         super.onCreate();
         OkGo.getInstance().init(this);
+        Logger.addLogAdapter(new AndroidLogAdapter());
     }
 
 
