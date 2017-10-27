@@ -1,7 +1,6 @@
 package cn.com.cdgame.frpg.mode
 
 
-
 /**
  * 作者：陈东  —  www.renwey.com
  * 日期：2017/10/26 - 下午4:46
@@ -11,8 +10,8 @@ package cn.com.cdgame.frpg.mode
 class Result<D> {
 
 
-    private var code: Int = 0
-    private var msg: String? = null
-    private var data: D? = null
+    var code: Int = 0
+    var msg: String = ""
+    var data: D? = null
 
 }

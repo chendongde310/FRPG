@@ -7,7 +7,7 @@ package cn.com.cdgame.frpg.mode
  *
  */
 class User {
-     val id: Long? = null
-     val userName: String? = null
-     val userPassword: String? = null
+    var id: Long = 0L
+    var userName: String = ""
+    var userPassword: String = ""
 }

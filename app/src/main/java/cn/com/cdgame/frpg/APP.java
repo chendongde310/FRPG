@@ -1,6 +1,6 @@
 package cn.com.cdgame.frpg;
 
-import com.lzy.okgo.OkGo;
+import com.orhanobut.hawk.Hawk;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.qihoo360.replugin.RePlugin;
@@ -21,8 +21,8 @@ public class APP extends RePluginApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        OkGo.getInstance().init(this);
         Logger.addLogAdapter(new AndroidLogAdapter());
+        Hawk.init(this).build();
     }
 
 
