@@ -1,7 +1,9 @@
 package cn.com.cdgame.frpg
 
 import android.app.Activity
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import cn.com.cdgame.frpg.mode.Result
 import cn.com.cdgame.frpg.mode.User
 import cn.com.cdgame.frpg.utlis.Utlis
@@ -39,6 +41,7 @@ class MainActivity : Activity() {
 
     /**
      * 登陆
+     *
      */
     fun login() {
 
@@ -51,10 +54,11 @@ class MainActivity : Activity() {
 
                     }
 
+                    @RequiresApi(Build.VERSION_CODES.O)
                     override fun onNext(value: Result<User>) {
                         when (value.code) {
-                            0 -> loginSuccess(value.data)
-                            -1 -> register()
+                            0 -> loginSuccess(value.data)//登陆成功
+                            -1 -> randomCode()//未注册  -> 就生成随机码
                             else -> loginError(value.msg, value.code)
                         }
                     }
@@ -71,17 +75,28 @@ class MainActivity : Activity() {
 
     }
 
-    /**
-     * 注册
+    @RequiresApi(Build.VERSION_CODES.O)
+            /**
+     *
      * 生成一个随机码
      */
-    fun register() {
+    fun randomCode() {
         var password = Hawk.get<String>(DB_U_ID)
         if (password == null) {
             password = Utlis().createRandomCode()
             Hawk.put(DB_U_PW, password)
         }
-        with(stx) { post { animateText("随机码：$password") } }
+
+
+        with(stx) { post { animateText("随机码：" + Integer.toHexString(password.toInt())) } }
+    }
+
+
+    /**
+     * 注册
+     */
+    fun register() {
+
     }
 
 
