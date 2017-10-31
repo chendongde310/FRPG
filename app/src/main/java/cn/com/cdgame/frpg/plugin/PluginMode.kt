@@ -1,4 +1,4 @@
-package cn.com.cdgame.frpg.mode
+package cn.com.cdgame.frpg.plugin
 
 import com.qihoo360.replugin.model.PluginInfo
 

@@ -1,4 +1,4 @@
-package cn.com.cdgame.frpg
+package cn.com.cdgame.frpg.mod
 
 import android.os.Handler
 

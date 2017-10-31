@@ -1,4 +1,4 @@
-package cn.com.cdgame.frpg
+package cn.com.cdgame.frpg.plugin
 
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.FileCallback
@@ -38,7 +38,7 @@ class PluginHandler {
     }
 
     companion object {
-        fun get(): PluginHandler = PluginHandler.declaration.pluginHandler
+        fun get(): PluginHandler = declaration.pluginHandler
     }
 
 

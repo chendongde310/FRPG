@@ -1,4 +1,4 @@
-package cn.com.cdgame.frpg.mode
+package cn.com.cdgame.frpg.model
 
 /**
  * 作者：陈东  —  www.renwey.com

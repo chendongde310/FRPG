@@ -1,6 +1,6 @@
 package cn.com.cdgame.frpg
 
-import cn.com.cdgame.frpg.mode.Api
+import cn.com.cdgame.frpg.model.Api
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -13,17 +13,17 @@ import retrofit2.converter.gson.GsonConverterFactory
  *
  */
 
-object Network{
+object Network {
 
     private val HOST: String = "http://120.78.148.66:8080/"
 
-    var retrofit = Retrofit.Builder()
+    private var retrofit = Retrofit.Builder()
             .baseUrl(HOST)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
 
-     val api: Api = retrofit.create(Api::class.java)
+    val api: Api = retrofit.create(Api::class.java)
 
 
 }

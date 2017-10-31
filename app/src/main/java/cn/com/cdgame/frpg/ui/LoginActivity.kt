@@ -1,31 +1,32 @@
-package cn.com.cdgame.frpg
+package cn.com.cdgame.frpg.ui
 
 import android.app.Activity
-import android.os.Build
+import android.content.Intent
 import android.os.Bundle
-import android.support.annotation.RequiresApi
-import cn.com.cdgame.frpg.mode.Result
-import cn.com.cdgame.frpg.mode.User
+import android.os.Handler
+import cn.com.cdgame.frpg.Network
+import cn.com.cdgame.frpg.R
+import cn.com.cdgame.frpg.mod.ScriptMod
+import cn.com.cdgame.frpg.model.Result
+import cn.com.cdgame.frpg.model.User
 import cn.com.cdgame.frpg.utlis.Utlis
 import com.orhanobut.hawk.Hawk
 import com.orhanobut.logger.Logger
 import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_login.*
 
-class MainActivity : Activity() {
-
+class LoginActivity : Activity() {
     val strings: Array<String> = arrayOf("你好冒险者", "欢迎进入LOF", "服务器连接中，请稍等...")
     val DB_U_ID = "DB_USER_ID"
     val DB_U_PW = "DB_USER_PASSWORD"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
+        setContentView(R.layout.activity_login)
         ScriptMod().apply {
-            isLoop = false
             contents = strings
         }.play(object : ScriptMod.Callback {
             override fun onNext(text: String, index: Int) {
@@ -47,14 +48,14 @@ class MainActivity : Activity() {
 
 
         Network.api.login(Hawk.get(DB_U_ID, -1), Hawk.get(DB_U_PW, "DEFAULT_PASSWORD"))
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
                 .subscribe(object : Observer<Result<User>> {
                     override fun onSubscribe(d: Disposable) {
 
                     }
 
-                    @RequiresApi(Build.VERSION_CODES.O)
+
                     override fun onNext(value: Result<User>) {
                         when (value.code) {
                             0 -> loginSuccess(value.data)//登陆成功
@@ -75,13 +76,14 @@ class MainActivity : Activity() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-            /**
+
+    /**
      *
      * 生成一个随机码
      */
     fun randomCode() {
-        var password = Hawk.get<String>(DB_U_ID)
+
+        var password = Hawk.get<String>(DB_U_PW)
         if (password == null) {
             password = Utlis().createRandomCode()
             Hawk.put(DB_U_PW, password)
@@ -89,13 +91,54 @@ class MainActivity : Activity() {
 
 
         with(stx) { post { animateText("随机码：" + Integer.toHexString(password.toInt())) } }
+
+        stx.setOnClickListener {
+            with(stx) { post { animateText("注册中，请等待") } }
+            register()
+        }
+
     }
 
 
     /**
      * 注册
+     * (测试方法)
      */
-    fun register() {
+    private fun register() {
+        Network.api.register("二狗君", Hawk.get<String>(DB_U_PW))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(object : Observer<Result<User>> {
+                    override fun onSubscribe(d: Disposable) {
+
+                    }
+
+                    override fun onNext(value: Result<User>) {
+                        val user: User? = value.data
+                        if (user == null) {
+
+                        }
+
+
+                        when (value.code) {
+                            0 -> {
+                                Hawk.put(DB_U_ID, value.data?.id)
+                                Hawk.put(DB_U_PW, value.data?.userPassword)
+                                login()
+                            }
+
+                            else -> loginError(value.msg, value.code)
+                        }
+                    }
+
+                    override fun onError(e: Throwable) {
+                        loginError(e.message, e.hashCode())
+                    }
+
+                    override fun onComplete() {
+
+                    }
+                })
 
     }
 
@@ -115,30 +158,8 @@ class MainActivity : Activity() {
      */
     private fun loginSuccess(user: User?) {
         with(stx) { post { animateText("欢迎回来${user?.userName}") } }
+        Handler().postDelayed({
+            startActivity(Intent(this@LoginActivity,MainActivity::class.java))
+        },1800)
     }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,4 +1,4 @@
-package cn.com.cdgame.frpg.utlis
+package cn.com.cdgame.frpg.plugin
 
 import android.content.Context
 import com.qihoo360.replugin.RePlugin
