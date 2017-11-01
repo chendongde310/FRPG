@@ -26,6 +26,8 @@ class LoginActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        //播放剧本
         ScriptMod().apply {
             contents = strings
         }.play(object : ScriptMod.Callback {
@@ -92,9 +94,10 @@ class LoginActivity : Activity() {
 
         with(stx) { post { animateText("随机码：" + Integer.toHexString(password.toInt())) } }
 
+        //TODO--注册流程改动
         stx.setOnClickListener {
             with(stx) { post { animateText("注册中，请等待") } }
-            register()
+            register("二狗君")
         }
 
     }
@@ -104,8 +107,8 @@ class LoginActivity : Activity() {
      * 注册
      * (测试方法)
      */
-    private fun register() {
-        Network.api.register("二狗君", Hawk.get<String>(DB_U_PW))
+    private fun register(name :String) {
+        Network.api.register(name, Hawk.get<String>(DB_U_PW))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(object : Observer<Result<User>> {
@@ -157,9 +160,13 @@ class LoginActivity : Activity() {
      * 登陆成功
      */
     private fun loginSuccess(user: User?) {
+
+
         with(stx) { post { animateText("欢迎回来${user?.userName}") } }
+
         Handler().postDelayed({
-            startActivity(Intent(this@LoginActivity,MainActivity::class.java))
-        },1800)
+            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+            this@LoginActivity.finish()
+        }, 1800)
     }
 }
